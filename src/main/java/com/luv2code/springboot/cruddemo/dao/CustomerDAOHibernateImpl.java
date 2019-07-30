@@ -28,9 +28,6 @@ public class CustomerDAOHibernateImpl implements CustomerDAO {
         Session currentSession = entityManager.unwrap(Session.class);
 
         //create a query
-        String str = "select ";
-        str += "*";
-        str += "from Klient";
         String str2="from Customer";
         Query<Customer> theQuery =
                 currentSession.createQuery(str2, Customer.class);
@@ -69,11 +66,11 @@ public class CustomerDAOHibernateImpl implements CustomerDAO {
         Session currentSession = entityManager.unwrap(Session.class);
 
         //delete object with primary key
-        /*Query theQuery =
+        Query theQuery =
                 currentSession.createQuery(
-                  "delete from Klient where id=:customerID"
+                  "delete from Customer where id=:customerID"
                 );
-        theQuery.setParameter("employeeId", theId);
-        theQuery.executeUpdate();*/
+        theQuery.setParameter("customerID", theId);
+        theQuery.executeUpdate();
     }
 }
