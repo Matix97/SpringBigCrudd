@@ -7,3 +7,4 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(path="members")
 public interface CustomerRepository  extends JpaRepository<Customer,Integer> {
 }
+//
