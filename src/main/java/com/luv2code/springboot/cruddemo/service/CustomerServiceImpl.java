@@ -1,43 +1,48 @@
 package com.luv2code.springboot.cruddemo.service;
 
-import com.luv2code.springboot.cruddemo.dao.CustomerDAO;
+import com.luv2code.springboot.cruddemo.dao.CustomerRepository;
 import com.luv2code.springboot.cruddemo.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-    private CustomerDAO customerDAO;
+    private CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerServiceImpl(CustomerDAO customerDAO) {
-        this.customerDAO = customerDAO;
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 
     @Override
-    @Transactional
     public List<Customer> findAll() {
-        return customerDAO.findAll();
+        return customerRepository.findAll();
     }
 
     @Override
-    @Transactional
-    public Customer findById(int theId) {
-        return customerDAO.findById(theId);
+    public Customer findById(int theId)
+    {
+        Optional<Customer> result =customerRepository.findById(theId);
+        Customer customer =null;
+        if(result.isPresent())
+            customer=result.get();
+        else
+            throw new RuntimeException("Did not find customer id - "+ theId);
+
+        return customer;
     }
 
     @Override
-    @Transactional
     public void save(Customer theCustomer) {
-        customerDAO.save(theCustomer);
+        customerRepository.save(theCustomer);
     }
 
     @Override
-    @Transactional
     public void deleteById(int theId) {
-        customerDAO.deleteById(theId);
+        customerRepository.deleteById(theId);
     }
 }
